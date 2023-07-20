@@ -34,6 +34,7 @@ def main(args):
         for audio_file in tqdm(audio_files):
             try:
                 mel.load_audio(audio_file)
+                rating = audio_file.split("/")[-1].split("_")[-1][:-4]
             except KeyboardInterrupt:
                 raise
             except:
@@ -53,10 +54,11 @@ def main(args):
                         {
                             "image": {"bytes": bytes},
                             "audio_file": audio_file,
-                            "slice": slice,
+                            "rating": rating,
                         }
                     ]
                 )
+
     except Exception as e:
         print(e)
     finally:
@@ -69,7 +71,7 @@ def main(args):
                 {
                     "image": Image(),
                     "audio_file": Value(dtype="string"),
-                    "slice": Value(dtype="int16"),
+                    "rating": Value(dtype="float32"),
                 }
             ),
         )
